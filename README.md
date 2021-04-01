@@ -1,5 +1,5 @@
 # pypxl
-An asynchronous wrapper for pxlapi
+An asynchronous wrapper for [pxlapi](https://pxlapi.dev)
 
 # Install it
 Just use `pip3 install pypxl` to install it
