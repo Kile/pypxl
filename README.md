@@ -3,9 +3,8 @@ An asynchronous wrapper for pxlapi
 
 # How to use it
 ```py
-#Define yout details here
 from pypxl import Pxlapi
-
+#Define yout details here
 pxl = Pxlapi(token="Your pxlapi token", stop_on_error=False)
 ```
 
