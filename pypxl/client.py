@@ -135,7 +135,7 @@ class Pxlapi():
             'images': images,
             'quality': quality
         }
-        return await get_img('jpeg', body)
+        return await self.get_img('jpeg', body)
 
     async def image_search(self, query:str, safeSearch:str='strict', meta:bool=False):
         if len(query) > 128:
@@ -154,7 +154,7 @@ class Pxlapi():
             'safeSearch': safeSearch,
             'meta': meta
         }
-        return await get_text('image_search', body)
+        return await self.get_text('image_search', body)
 
     async def screenshot(self, url:str, device:str=None, locale:str='en_US', blocklist:list=[], defaultBlocklist:bool=True, browser:str='chromium', theme:str='dark', timeout:int=30000):
         body = {
