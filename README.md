@@ -1,6 +1,9 @@
 # pypxl
 An asynchronous wrapper for pxlapi
 
+# Install it
+Just use `pip3 install pypxl` to install it
+
 # How to use it
 ```py
 from pypxl import Pxlapi
