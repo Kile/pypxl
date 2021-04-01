@@ -6,7 +6,7 @@ description = "An Asynchronos API wrapper for https://pxlapi.dev"
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/Kile/pypxl"
-authors = ["Daggy1234 <daggy@daggy.tech>"]
+authors = ["Kile <Kile@killua.dev>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
