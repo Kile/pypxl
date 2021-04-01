@@ -2,9 +2,6 @@ import aiohttp
 import json
 from .errors import PxlapiException, InvalidFlag, TooManyCharacters, InvalidSafety
 
-FLAGS = ["asexual", "aromantic", "bisexual", "pansexual", "gay", "lesbian", "trans", "nonbinary", "genderfluid", "genderqueer", "polysexual", "austria", "belgium", "botswana", "bulgaria", "ivory", "estonia", "france", "gabon", "gambia", "germany", "guinea", "hungary", "indonesia", "ireland", "italy", "luxembourg", "monaco", "nigeria", "poland", "russia", "romania", "sierraleone", "thailand", "ukraine", "yemen"]
-FILTERS = ["dog", "dog2", "dog3", "pig", "flowers", "random"]
-
 class Pxlapi():
 
     FLAGS = ["asexual", "aromantic", "bisexual", "pansexual", "gay", "lesbian", "trans", "nonbinary", "genderfluid", "genderqueer", "polysexual", "austria", "belgium", "botswana", "bulgaria", "ivory", "estonia", "france", "gabon", "gambia", "germany", "guinea", "hungary", "indonesia", "ireland", "italy", "luxembourg", "monaco", "nigeria", "poland", "russia", "romania", "sierraleone", "thailand", "ukraine", "yemen"]
@@ -159,7 +156,7 @@ class Pxlapi():
         }
         return await get_text('image_search', body)
 
-    async def screenshot(self, url:str, device:str='iPhone 11 Pro Max', locale:str='en_US', blocklist:list=[], defaultBlocklist:bool=True, browser:str='cromium', theme:str='dark', timeout:int=30000):
+    async def screenshot(self, url:str, device:str=None, locale:str='en_US', blocklist:list=[], defaultBlocklist:bool=True, browser:str='chromium', theme:str='dark', timeout:int=30000):
         body = {
             'url': url,
             'device': device,
