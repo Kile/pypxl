@@ -4,14 +4,15 @@ from .errors import PxlapiException, InvalidFlag, TooManyCharacters, InvalidSafe
 
 class Pxlapi():
 
-    FLAGS = ["asexual", "aromantic", "bisexual", "pansexual", "gay", "lesbian", "trans", "nonbinary", "genderfluid", "genderqueer", "polysexual", "austria", "belgium", "botswana", "bulgaria", "ivory", "estonia", "france", "gabon", "gambia", "germany", "guinea", "hungary", "indonesia", "ireland", "italy", "luxembourg", "monaco", "nigeria", "poland", "russia", "romania", "sierraleone", "thailand", "ukraine", "yemen"]
-    FILTERS = ["dog", "dog2", "dog3", "pig", "flowers", "random"]  
-    SAFE_SEARCH = ["off", "moderate", "strict"]
 
     def __init__(self, token:str, session=aiohttp.ClientSession(), stop_on_error:bool=False):
         self.token = token
         self.session = session
         self.stop_on_error = stop_on_error
+
+        self.flags = ["asexual", "aromantic", "bisexual", "pansexual", "gay", "lesbian", "trans", "nonbinary", "genderfluid", "genderqueer", "polysexual", "austria", "belgium", "botswana", "bulgaria", "ivory", "estonia", "france", "gabon", "gambia", "germany", "guinea", "hungary", "indonesia", "ireland", "italy", "luxembourg", "monaco", "nigeria", "poland", "russia", "romania", "sierraleone", "thailand", "ukraine", "yemen"]
+        self.filters = ["dog", "dog2", "dog3", "pig", "flowers", "random"] 
+        self.safe_search = ["off", "moderate", "strict"]
 
     async def get_img(self, enpoint:str, body:dict):
         session = aiohttp.ClientSession() 
@@ -65,7 +66,7 @@ class Pxlapi():
 
 
     async def flag(self, flag:str, images:str, opacity:int=128):
-        if not flag.lower() in FLAGS:
+        if not flag.lower() in self.flags:
             if self.stop_on_error:
                 raise InvalidFlag(f'Flag {flag.lower()} not a valid flag')
             else:
@@ -98,8 +99,8 @@ class Pxlapi():
         return await self.get_img('lego', body)
 
 
-    async def snapchat(self, filter:str, images:list, filters:list=FILTERS):
-        if not filter.lower() in FILTERS:
+    async def snapchat(self, filter:str, images:list, filters:list=None):
+        if not filter.lower() in self.filters:
             if self.stop_on_error:
                 raise InvalidFilter(f'Flag {filter.lower()} not a valid flag')
             else:
@@ -143,7 +144,7 @@ class Pxlapi():
                 raise TooManyCharacters("Too many characters used for the image_search endpoint")
             else:
                 return "Too many characters used for the image_search endpoint"
-        if not safeSearch.lower() in SAFE_SEARCH:
+        if not safeSearch.lower() in self.safe_search:
             if self.stop_on_error:
                 raise InvalidSafety("Invalid safety level for the image_search endpoint")
             else:
@@ -175,7 +176,7 @@ class Pxlapi():
                 raise TooManyCharacters("Too many characters used for the web_search endpoint")
             else:
                 return "Too many characters used for the web_search endpoint"
-        if not safeSearch.lower() in SAFE_SEARCH:
+        if not safeSearch.lower() in self.safe_search:
             if self.stop_on_error:
                 raise InvalidSafety("Invalid safety level for the web_search endpoint")
             else:
