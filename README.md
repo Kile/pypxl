@@ -17,7 +17,9 @@ glitch = await pxl.glitch(images=["https://cdn.discordapp.com/avatars/6061626611
 ```
 
 # Docs
-I have not written any documentation. Generally every enpoint has a function with the same name and the same parameters as the enpoint along with the same default values. For an example in a discord bot, please look [here](https://github.com/Kile/pypxl/blob/main/examples/glitch_discord.markdown)
+I have not written any documentation. Generally every enpoint has a function with the same name and the same parameters as the enpoint along with the same default values. For an example in a discord bot, please click [here](https://github.com/Kile/pypxl/blob/main/examples/glitch_discord.markdown)
+
+I have implemented all functions this library offers in commands in my bot. You can find all those commands [here](https://github.com/Kile/Killua/blob/main/killua/cogs/pxlapi.py)
 
 For questions and suggestions, join my discord server or dm me (`Kile#0606`)
 
