@@ -7,6 +7,9 @@ class InvalidFlag(PxlapiException):
 class InvalidFilter(PxlapiException):
     pass
 
+class InvalidEyes(PxlapiException):
+    pass
+
 class TooManyCharacters(PxlapiException):
     pass
 

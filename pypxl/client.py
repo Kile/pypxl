@@ -1,6 +1,6 @@
 import aiohttp
 import json
-from .errors import PxlapiException, InvalidFlag, TooManyCharacters, InvalidSafety
+from errors import PxlapiException, InvalidFlag, TooManyCharacters, InvalidSafety, InvalidEyes
 
 class Pxlapi():
 
@@ -13,6 +13,7 @@ class Pxlapi():
         self.flags = ["asexual", "aromantic", "bisexual", "pansexual", "gay", "lesbian", "trans", "nonbinary", "genderfluid", "genderqueer", "polysexual", "austria", "belgium", "botswana", "bulgaria", "ivory", "estonia", "france", "gabon", "gambia", "germany", "guinea", "hungary", "indonesia", "ireland", "italy", "luxembourg", "monaco", "nigeria", "poland", "russia", "romania", "sierraleone", "thailand", "ukraine", "yemen"]
         self.filters = ["dog", "dog2", "dog3", "pig", "flowers", "random"] 
         self.safe_search = ["off", "moderate", "strict"]
+        self.valid_eyes = ["big", "black", "bloodshot", "blue", "default", "googly", "green", "horror", "illuminati", "money", "pink", "red", "small", "spinner", "spongebob", "white", "yellow", "random"]
 
     async def get_img(self, enpoint:str, body:dict):
         session = aiohttp.ClientSession() 
@@ -102,9 +103,9 @@ class Pxlapi():
     async def snapchat(self, filter:str, images:list, filters:list=None):
         if not filter.lower() in self.filters:
             if self.stop_on_error:
-                raise InvalidFilter(f'Flag {filter.lower()} not a valid flag')
+                raise InvalidFilter(f'Flag {filter.lower()} not a valid filter')
             else:
-                return f'Flag {filter.lower()} not a valid flag'
+                return f'Flag {filter.lower()} not a valid filter'
 
         body = {
             'images': images,
@@ -112,6 +113,18 @@ class Pxlapi():
         }
         return await self.get_img(f'snapchat/{filter}', body)
 
+    async def eyes(self, eyes:str, images:list, filters:list=None):
+        if not eyes.lower() in self.valid_eyes:
+            if self.stop_on_error:
+                raise InvalidEyes(f'Flag {eyes.lower()} not a valid eye type')
+            else:
+                return f'Flag {eyes.lower()} not a valid eye type'
+
+        body = {
+            'images': images,
+            'filters': filters
+        }
+        return await self.get_img(f'eyes/{eyes}', body)
 
     async def thonkify(self, text:str):
         body = {
