@@ -1,6 +1,6 @@
 import aiohttp
 import json
-from errors import PxlapiException, InvalidFlag, TooManyCharacters, InvalidSafety, InvalidEyes
+from .errors import PxlapiException, InvalidFlag, TooManyCharacters, InvalidSafety, InvalidEyes
 
 class Pxlapi():
 
