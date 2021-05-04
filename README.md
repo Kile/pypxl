@@ -6,9 +6,9 @@ Just use `pip3 install pypxl` to install it
 
 # How to use it
 ```py
-from pypxl import Pxlapi
+from pypxl import PxlClient
 #Define yout details here
-pxl = Pxlapi(token="Your pxlapi token", stop_on_error=False)
+pxl = PxlClient(token="Your pxlapi token", stop_on_error=False)
 ```
 
 Now you can use a all pxlapi features with just one line of code!
@@ -17,9 +17,9 @@ glitch = await pxl.glitch(images=["https://cdn.discordapp.com/avatars/6061626611
 ```
 
 # Docs
-I have not written any documentation. Generally every enpoint has a function with the same name and the same parameters as the enpoint along with the same default values. For an example in a discord bot, please click [here](https://github.com/Kile/pypxl/blob/main/examples/glitch_discord.markdown)
+There is no website offering documentation, however if you hover over a function in your IDE it will give you some info about what it does, you can also just read the source code. For an example in a discord bot, please click [here](https://github.com/Kile/pypxl/blob/main/examples/glitch_discord.markdown)
 
-I have implemented all functions this library offers in commands in my bot. You can find all those commands [here](https://github.com/Kile/Killua/blob/main/killua/cogs/pxlapi.py)
+I have implemented most functions this library offers in commands in my bot. You can find those commands [here](https://github.com/Kile/Killua/blob/main/killua/cogs/pxlapi.py)
 
 For questions and suggestions, join my discord server or dm me (`Kile#0606`)
 
