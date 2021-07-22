@@ -4,7 +4,6 @@ This would be an example for a small bot command
 from pypxl import PxlClient
 import discord
 from discord.ext import commands
-import io
 
 bot = commands.Bot(command_prefix= commands.when_mentioned_or('pxl.'), description="Testing pxlapi wrapper", case_insensitive=True)
 
@@ -15,7 +14,7 @@ async def glitch(ctx, url:str):
     data = await pxl.glitch(images=[url])
 
     if data.success:
-      f = discord.File(io.BytesIO(data), filename=f"glitch.{r.file_type}")
+      f = discord.File(data.convert_to_ioBytes(), filename=f"glitch.{data.file_type}")
       await ctx.send(file=f)
     else:
       await ctx.send(":x: " + data.error)

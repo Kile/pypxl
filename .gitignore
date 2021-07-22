@@ -1,0 +1,7 @@
+**/__pycache__
+**/build
+**/pypxl.egg-info
+**/dist
+**/docs
+**/.DS_Store
+**/test

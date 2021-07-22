@@ -3,7 +3,9 @@ import json
 from .errors import PxlapiException, InvalidFlag, TooManyCharacters, InvalidSafety, InvalidEyes
 from .pxl_object import PxlObject
 
-class PxlClient():
+from typing import List
+
+class PxlClient:
     """
     The class which allows you to make requests to pxlapi
 
@@ -14,17 +16,17 @@ class PxlClient():
         `session (aiohttp client session)`: The session to use for requests
         `stop_on_error (boolean)`: If the code should raise an error if something went wrong or return the error text instead
     """
-    def __init__(self, token:str, session=aiohttp.ClientSession(), stop_on_error:bool=False):
+    def __init__(self, token:str, session=aiohttp.ClientSession(), stop_on_error:bool=False) -> PxlObject:
         self.token = token
         self.session = session
         self.stop_on_error = stop_on_error
 
         self.flags = ["asexual", "aromantic", "bisexual", "pansexual", "gay", "lesbian", "trans", "nonbinary", "genderfluid", "genderqueer", "polysexual", "austria", "belgium", "botswana", "bulgaria", "ivory", "estonia", "france", "gabon", "gambia", "germany", "guinea", "hungary", "indonesia", "ireland", "italy", "luxembourg", "monaco", "nigeria", "poland", "russia", "romania", "sierraleone", "thailand", "ukraine", "yemen"]
-        self.filters = ["dog", "dog2", "dog3", "pig", "flowers", "random"] 
+        self.filters = ["dog", "dog2", "dog3", "pig", "flowers", "clown", "random"] 
         self.safe_search = ["off", "moderate", "strict"]
         self.valid_eyes = ["big", "black", "bloodshot", "blue", "default", "googly", "green", "horror", "illuminati", "money", "pink", "red", "small", "spinner", "spongebob", "white", "yellow", "random"]
 
-    async def get_img(self, enpoint:str, body:dict):
+    async def _get_img(self, enpoint:str, body:dict) -> PxlObject:
         """
         The function making the request which gets image bytes in return. Not meant to be used outside of this class
 
@@ -55,7 +57,7 @@ class PxlClient():
                 raise PxlapiException(error)
             return PxlObject(success=False, error=error)
 
-    async def get_text(self, enpoint:str, body:dict):
+    async def _get_text(self, enpoint:str, body:dict) -> PxlObject:
         """
         The function making the request which gets text in return. Not meant to be used outside of this class
 
@@ -86,7 +88,7 @@ class PxlClient():
 
             return PxlObject(error=error, success=False)
 
-    async def emojaic(self, images:list, groupSize:int=12, scale:bool=False):
+    async def emojaic(self, images:List[str], groupSize:int=12, scale:bool=False) -> PxlObject:
         """
         Turns the provided images into images assebled by emojis
 
@@ -104,9 +106,9 @@ class PxlClient():
             'scale': scale
         } 
         
-        return await self.get_img('emojimosaic', body)
+        return await self._get_img('emojimosaic', body)
 
-    async def flag(self, flag:str, images:str, opacity:int=128):
+    async def flag(self, flag:str, images:List[str], opacity:int=128) -> PxlObject:
         """
         Turns the provided images into images with the flag specified
 
@@ -128,9 +130,9 @@ class PxlClient():
             'images': images,
             'opacity': opacity,
         }
-        return await self.get_img(f'flag/{flag.lower()}', body)
+        return await self._get_img(f'flag/{flag.lower()}', body)
 
-    async def ganimal(self, images:list):
+    async def ganimal(self, images:List[str]) -> PxlObject:
         """
         Turns the provided images into images with animal faces
 
@@ -143,9 +145,24 @@ class PxlClient():
         body = {
             'images': images
         }
-        return await self.get_img('ganimal', body)
+        return await self._get_img('ganimal', body)
 
-    async def flash(self, images:list):
+    async def ajit(self, images:List[str]) -> PxlObject:
+        """
+        Overlays an image of Ajit Pai snacking on some popcorn
+
+        # Parameters:
+            `images (list)`: The images to proccess
+
+        # Returns:
+            `PxlObject`
+        """
+        body = {
+            'images': images
+        }
+        return await self._get_img('ajit', body)
+
+    async def flash(self, images:List[str]) -> PxlObject:
         """
         Turns the provided images into flash images
 
@@ -158,9 +175,9 @@ class PxlClient():
         body = {
             'images': images
         }
-        return await self.get_img('flash', body)
+        return await self._get_img('flash', body)
 
-    async def glitch(self, images:list, delay:int=100, count:int=10, amount:int=5, iterations:int=10, gif:bool=None):
+    async def glitch(self, images:List[str], delay:int=100, count:int=10, amount:int=5, iterations:int=10, gif:bool=None) -> PxlObject:
         """
         Turns the provided images into images into glitch GIFs and/or images
 
@@ -183,9 +200,9 @@ class PxlClient():
             'iterations': iterations,
             'gif': gif
         }
-        return await self.get_img('glitch', body)
+        return await self._get_img('glitch', body)
 
-    async def lego(self, images:list, scale:bool=False, groupSize:int=8):
+    async def lego(self, images:List[str], scale:bool=False, groupSize:int=8) -> PxlObject:
         """
         Turns the provided images into images into images made up of lego bricks
 
@@ -202,9 +219,9 @@ class PxlClient():
             'scale': scale,
             'groupSize': groupSize
         }
-        return await self.get_img('lego', body)
+        return await self._get_img('lego', body)
     
-    async def jpeg(self, images:list, quality:int=1):
+    async def jpeg(self, images:List[str], quality:int=1) -> PxlObject:
         """
         Turns the provided images into lower quality
 
@@ -219,9 +236,9 @@ class PxlClient():
             'images': images,
             'quality': quality
         }
-        return await self.get_img('jpeg', body)
+        return await self._get_img('jpeg', body)
 
-    async def snapchat(self, filter:str, images:list, filters:list=None):
+    async def snapchat(self, filter:str, images:List[str], filters:list=None) -> PxlObject:
         """
         Turns the provided images into images with the snap filter provided if a face is detected
 
@@ -237,15 +254,15 @@ class PxlClient():
             if self.stop_on_error:
                 raise InvalidFilter(f'Flag {filter.lower()} not a valid filter')
             else:
-                return f'Flag {filter.lower()} not a valid filter'
+                return PxlObject(success=False, error=f'Flag {filter.lower()} not a valid filter')
 
         body = {
             'images': images,
             'filters': filters
         }
-        return await self.get_img(f'snapchat/{filter}', body)
+        return await self._get_img(f'snapchat/{filter}', body)
 
-    async def eyes(self, eyes:str, images:list, filters:list=None):
+    async def eyes(self, eyes:str, images:List[str], filters:list=None) -> PxlObject:
         """
         Turns the provided images into images with a filter applied to the eyes of faces detected
 
@@ -259,17 +276,17 @@ class PxlClient():
         """
         if not eyes.lower() in self.valid_eyes:
             if self.stop_on_error:
-                raise InvalidEyes(f'Flag {eyes.lower()} not a valid eye type')
+                raise InvalidEyes(f'Eye {eyes.lower()} not a valid eye type')
             else:
-                return f'Flag {eyes.lower()} not a valid eye type'
+                return PxlObject(success=False, error=f'Eye {eyes.lower()} not a valid eye type')
 
         body = {
             'images': images,
             'filters': filters
         }
-        return await self.get_img(f'eyes/{eyes}', body)
+        return await self._get_img(f'eyes/{eyes}', body)
 
-    async def thonkify(self, text:str):
+    async def thonkify(self, text:str) -> PxlObject:
         """
         Turns the provided text into an image with that text made up of thonks
 
@@ -282,9 +299,9 @@ class PxlClient():
         body = {
             'text': text
         }
-        return await self.get_img('thonkify', body)
+        return await self._get_img('thonkify', body)
 
-    async def sonic(self, text:str):
+    async def sonic(self, text:str) -> PxlObject:
         """
         Turns the provided text into an image with sonic saying the provided text
 
@@ -298,14 +315,38 @@ class PxlClient():
             if self.stop_on_error:
                 raise TooManyCharacters("Too many characters used for the sonic endpoint")
             else:
-                return "Too many characters used for the sonic endpoint"
+                return PxlObject(success=False, error="Too many characters used for the sonic endpoint")
 
         body = {
             'text': text
         }
-        return await self.get_img('sonic', body)
+        return await self._get_img('sonic', body)
 
-    async def imagescript(self, version:str, code:str, inject=None, timeout:int=10000):
+    async def klines(self, pair:str=None, interval:str="1m", limit:int=90, ticks:List[int]=None, custom:dict=None):
+        """
+        Creates a candlestick chart for the given coin pair / ticks
+
+        # Parameters:
+            `pair (string)`: The [coin pair](https://www.binance.com/api/v3/exchangeInfo) to generate a candlestick chart for (e.g. `BNBBUSD`). Optional if custom ticks are sent.
+            `interval (string)`: Timespan between candlesticks
+            `limit (int)`: How many candlesticks to draw
+            `ticks (list)`: Custom ticks (lets you send in [binance API compatible](https://github.com/binance/binance-spot-api-docs/blob/master/rest-api.md#klinecandlestick-data) tick data)
+            `custom (dict)`: Custom pair data to display
+                key `baseAsset (string)`: Custom base asset name to display
+                value `quoteAsset (string)`: Custom quote asset name to display
+        
+        # Returns:
+            `PxlObject`
+        """
+        body = {
+            "interval": interval,
+            "limit": limit,
+            "ticks": ticks,
+            "pair": pair,
+        }
+        return await self._get_img(f"klines{f'/{pair}' if pair else ''}", body)
+
+    async def imagescript(self, version:str, code:str, inject=None, timeout:int=10000) -> PxlObject:
         """
         Evaluates code 
 
@@ -323,9 +364,9 @@ class PxlClient():
             'inject': inject,
             'timeout': timeout
         }
-        return await self.get_img(f'imagescript/{version}', body)
+        return await self._get_img(f'imagescript/{version}', body)
 
-    async def imagescript_version(self):
+    async def imagescript_version(self) -> PxlObject:
         """
         Gives you the available versions for imagescript
 
@@ -336,9 +377,9 @@ class PxlClient():
             `PxlObject`
         """
         body = {}
-        return await self.get_text('imagescript/versions', body)
+        return await self._get_text('imagescript/versions', body)
 
-    async def image_search(self, query:str, safeSearch:str='strict', meta:bool=False):
+    async def image_search(self, query:str, safeSearch:str='strict', meta:bool=False) -> PxlObject:
         """
         Looks for images with provided query
 
@@ -354,26 +395,26 @@ class PxlClient():
             if self.stop_on_error:
                 raise TooManyCharacters("Too many characters used for the image_search endpoint")
             else:
-                return "Too many characters used for the image_search endpoint"
+                return PxlObject(success=False, error="Too many characters used for the image_search endpoint")
         if not safeSearch.lower() in self.safe_search:
             if self.stop_on_error:
                 raise InvalidSafety("Invalid safety level for the image_search endpoint")
             else:
-                return "Invalid safety level for the image_search endpoint"
+                return PxlObject(success=False, error="Invalid safety level for the image_search endpoint")
 
         body = {
             'query': query,
             'safeSearch': safeSearch,
             'meta': meta
         }
-        return await self.get_text('image_search', body)
+        return await self._get_text('image_search', body)
 
-    async def screenshot(self, url:str, device:str=None, locale:str='en_US', blocklist:list=[], defaultBlocklist:bool=True, browser:str='chromium', theme:str='dark', timeout:int=30000, fullPage:bool=False):
+    async def screenshot(self, url:str, device:str=None, locale:str='en_US', blocklist:list=[], defaultBlocklist:bool=True, browser:str='chromium', theme:str='dark', timeout:int=30000, fullPage:bool=False) -> PxlObject:
         """
         Screenshots the webpage provided
 
         # Parameters:
-            `url (string): The website to screenshot
+            `url (string) -> PxlObject: The website to screenshot
             `device (string)`: The device to emulate. See [list of available devices](https://github.com/microsoft/playwright/blob/17e953c2d8bd19ace20059ffaaa85f3f23cfb19d/src/server/deviceDescriptors.js#L21-L857). Defaults to a non-specific browser with a viewport of 1920x1080 pixels.
             `locale (string)`: The locale to set the browser to
             `blocklist (list)`: A list of domains to block
@@ -396,14 +437,14 @@ class PxlClient():
             'theme': theme,
             'timeout': timeout
         }
-        return await self.get_img('screenshot', body)
+        return await self._get_img('screenshot', body)
 
-    async def web_search(self, query:str, safeSearch:str='strict'):
+    async def web_search(self, query:str, safeSearch:str='strict') -> PxlObject:
         """
         Searches for the querie provided
 
         # Parameters:
-            `url (string): The website to screenshot
+            `url (string) -> PxlObject: The website to screenshot
             `safeSearch (string)`: What safe search setting to use
 
         # Returns:
@@ -413,15 +454,15 @@ class PxlClient():
             if self.stop_on_error:
                 raise TooManyCharacters("Too many characters used for the web_search endpoint")
             else:
-                return "Too many characters used for the web_search endpoint"
+                return PxlObject(success=False, error="Too many characters used for the web_search endpoint")
         if not safeSearch.lower() in self.safe_search:
             if self.stop_on_error:
                 raise InvalidSafety("Invalid safety level for the web_search endpoint")
             else:
-                return "Invalid safety level for the web_search endpoint"
+                return PxlObject(success=False, error="Invalid safety level for the web_search endpoint")
 
         body = {
             'query': query,
             'safeSearch': safeSearch
         }
-        return await self.get_text('web_search', body)
+        return await self._get_text('web_search', body)
