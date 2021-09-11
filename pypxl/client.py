@@ -124,7 +124,7 @@ class PxlClient:
             if self.stop_on_error:
                 raise InvalidFlag(f'Flag {flag.lower()} not a valid flag')
             else:
-                return f'Flag {flag.lower()} not a valid flag'
+                return PxlObject(success=False, error=f'Flag {flag.lower()} not a valid flag')
 
         body = {
             'images': images,
