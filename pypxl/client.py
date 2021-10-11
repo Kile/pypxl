@@ -132,21 +132,6 @@ class PxlClient:
         }
         return await self._get_img(f'flag/{flag.lower()}', body)
 
-    async def ganimal(self, images:List[str]) -> PxlObject:
-        """
-        Turns the provided images into images with animal faces
-
-        # Parameters:
-            `images (list)`: The images to proccess
-
-        # Returns:
-            `PxlObject`
-        """
-        body = {
-            'images': images
-        }
-        return await self._get_img('ganimal', body)
-
     async def ajit(self, images:List[str]) -> PxlObject:
         """
         Overlays an image of Ajit Pai snacking on some popcorn

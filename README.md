@@ -19,7 +19,7 @@ glitch = await pxl.glitch(images=["https://cdn.discordapp.com/avatars/6061626611
 # Docs
 There is no website offering documentation, however if you hover over a function in your IDE it will give you some info about what it does, you can also just read the source code. For an example in a discord bot, please click [here](https://github.com/Kile/pypxl/blob/main/examples/glitch_discord.markdown)
 
-I have implemented most functions this library offers in commands in my bot. You can find those commands [here](https://github.com/Kile/Killua/blob/main/killua/cogs/pxlapi.py)
+I have implemented most functions this library offers in commands in my bot. You can find those commands [here](https://github.com/Kile/Killua/blob/main/killua/cogs/image_manipulation.py)
 
 For questions and suggestions, join my discord server or dm me (`Kile#0606`)
 
