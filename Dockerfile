@@ -1,3 +1,5 @@
+LABEL org.opencontainers.image.source=https://github.com/kile/pypxl
+
 # using ubuntu LTS version
 FROM ubuntu:20.04 AS builder-image
 
