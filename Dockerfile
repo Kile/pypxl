@@ -1,5 +1,3 @@
-LABEL org.opencontainers.image.source=https://github.com/kile/pypxl
-
 # using ubuntu LTS version
 FROM ubuntu:20.04 AS builder-image
 
@@ -39,3 +37,5 @@ ENV PYTHONUNBUFFERED=1
 # activate virtual environment
 ENV VIRTUAL_ENV=/home/myuser/venv
 ENV PATH="/home/myuser/venv/bin:$PATH"
+
+LABEL org.opencontainers.image.source=https://github.com/kile/pypxl
