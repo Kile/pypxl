@@ -1,7 +1,7 @@
 import io
 from .errors import InvalidBytes
 
-class PxlObject():
+class PxlObject:
     """
     An object you will get as a response to any request
 

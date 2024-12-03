@@ -1,5 +1,4 @@
 import aiohttp
-import json
 from .errors import PxlapiException, InvalidFlag, TooManyCharacters, InvalidSafety, InvalidEyes
 from .pxl_object import PxlObject
 
@@ -16,7 +15,7 @@ class PxlClient:
         `session (aiohttp client session)`: The session to use for requests
         `stop_on_error (boolean)`: If the code should raise an error if something went wrong or return the error text instead
     """
-    def __init__(self, token:str, session=aiohttp.ClientSession(), stop_on_error:bool=False) -> PxlObject:
+    def __init__(self, token:str, session:aiohttp.ClientSession, stop_on_error:bool=False) -> PxlObject:
         self.token = token
         self.session = session
         self.stop_on_error = stop_on_error
@@ -26,7 +25,7 @@ class PxlClient:
         self.safe_search = ["off", "moderate", "strict"]
         self.valid_eyes = ["big", "black", "bloodshot", "blue", "default", "googly", "green", "horror", "illuminati", "money", "pink", "red", "small", "spinner", "spongebob", "white", "yellow", "random"]
 
-    async def _get_img(self, enpoint:str, body:dict) -> PxlObject:
+    async def _get_img(self, enpoint: str, body: dict) -> PxlObject:
         """
         The function making the request which gets image bytes in return. Not meant to be used outside of this class
 
